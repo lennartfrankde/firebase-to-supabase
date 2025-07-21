@@ -16,8 +16,9 @@ This guide provides a comprehensive solution for migrating your Firebase data to
 **Total Time**: 30-60 minutes depending on data volume
 
 **Process**:
+
 1. Export Firebase Authentication users
-2. Export Firestore collections to JSON  
+2. Export Firestore collections to JSON
 3. Import to PocketBase with ID mapping
 4. Link all relationships automatically
 
@@ -33,7 +34,7 @@ node firestoreusers2json.js firebase_auth_users.json 100
 node import_userpb.js
 ```
 
-*Creates and imports all Firebase Auth users to PocketBase*
+_Creates and imports all Firebase Auth users to PocketBase_
 
 ### Step 2: Export Firestore Collections
 
@@ -42,11 +43,11 @@ cd g:\Git\firebase-to-supabase\firestore
 
 # Export all collections
 node firestore2json.js users 1000 0
-node firestore2json.js user_libary 1000 0  
+node firestore2json.js user_libary 1000 0
 node firestore2json.js books 1000 0
 ```
 
-*Generates JSON files with extracted sub-collections*
+_Generates JSON files with extracted sub-collections_
 
 ### Step 3: Import All Collections with ID Mapping
 
@@ -69,6 +70,7 @@ node json2pocketbase_v2.js leseexemplar.json leseexemplar
 ```
 
 **Key Features**:
+
 - ✅ Creates `id_mappings.json` with Firebase → PocketBase ID mappings
 - ✅ Preserves original Firebase IDs in `firebaseId` fields
 - ✅ Handles all data types and relationships
@@ -83,8 +85,9 @@ node link_user_collections.js
 ```
 
 **What Gets Linked**:
+
 - ✅ Users ↔ userData
-- ✅ Users ↔ libary  
+- ✅ Users ↔ libary
 - ✅ Books ↔ tags (bidirectional)
 - ✅ Books ↔ leseexemplar
 - ✅ Libary ↔ listen, warengruppen, epubcfi
@@ -97,15 +100,17 @@ node link_user_collections.js
 ### Check PocketBase Admin Panel
 
 **Expected Results**:
+
 - Users collection: All Firebase Auth users
 - Books collection: Complete with populated tag arrays
 - Libary collection: All user libraries with relation arrays filled
 - All relation fields populated (no empty arrays)
 
 ### Console Output Examples
+
 ```
 ✓ Listen → Books: 4
-✓ Warengruppen → Books: 18  
+✓ Warengruppen → Books: 18
 ✓ Epubcfi → Books: 25
 ✓ Books linked to tags: 54
 ✓ All relationships established successfully
@@ -118,12 +123,14 @@ node link_user_collections.js
 ### Common Issues & Solutions
 
 **Import Failures**
+
 ```bash
 # Check PocketBase schema and admin credentials
 # Verify JSON file structure and paths
 ```
 
-**Relation Linking Issues** 
+**Relation Linking Issues**
+
 ```bash
 # Ensure id_mappings.json exists and is complete
 # Check that users have libary relationships established
@@ -131,6 +138,7 @@ node link_user_collections.js
 ```
 
 **Missing Records**
+
 ```bash
 # Compare record counts between Firebase and PocketBase
 # Check console output for specific error messages
@@ -143,7 +151,7 @@ node link_user_collections.js
 # Check ID mappings
 cat id_mappings.json | jq '.users | length'
 
-# Run with verbose logging  
+# Run with verbose logging
 node link_user_collections.js 2>&1 | tee migration.log
 ```
 

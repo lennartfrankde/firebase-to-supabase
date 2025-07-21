@@ -20,6 +20,7 @@ npm install pocketbase axios
 **Update these files with your credentials:**
 
 `auth/import_userpb.js`:
+
 ```javascript
 const POCKETBASE_URL = "https://your-pocketbase-url.com";
 const ADMIN_EMAIL = "your-admin@email.com";
@@ -27,6 +28,7 @@ const ADMIN_PASSWORD = "your-admin-password";
 ```
 
 `firestore/json2pocketbase_v2.js`:
+
 ```javascript
 const POCKETBASE_URL = "https://your-pocketbase-url.com";
 const ADMIN_EMAIL = "your-admin@email.com";
@@ -34,6 +36,7 @@ const ADMIN_PASSWORD = "your-admin-password";
 ```
 
 `firestore/link_*.js` (all linking scripts):
+
 ```javascript
 const POCKETBASE_URL = "https://your-pocketbase-url.com";
 const ADMIN_EMAIL = "your-admin@email.com";
@@ -43,6 +46,7 @@ const ADMIN_PASSWORD = "your-admin-password";
 ### 3. Firebase Service Account
 
 Place your `firebase-service.json` file in:
+
 - `g:\Git\firebase-to-supabase\auth\firebase-service.json`
 - `g:\Git\firebase-to-supabase\firestore\firebase-service.json`
 
@@ -51,17 +55,20 @@ Place your `firebase-service.json` file in:
 Ensure your PocketBase collections have these fields:
 
 **users collection:**
+
 - All standard user fields
 - `libary` (relation to libary collection)
 - `userData` (relation to userData collection)
 
 **books collection:**
+
 - `firebaseId` (text field)
 - `Schlagworte` (relation to tags, multiple)
 - `Leseexemplar` (relation to leseexemplar, multiple)
 - All other book fields
 
 **libary collection:**
+
 - `firebaseId` (text field)
 - `Listen` (relation to listen, multiple)
 - `Warengruppen` (relation to warengruppen, multiple)
@@ -69,11 +76,13 @@ Ensure your PocketBase collections have these fields:
 - `books`, `favoriten`, `gelesen` (relation to books, multiple)
 
 **listen/warengruppen collections:**
+
 - `firebaseId` (text field)
 - `userId` (text field)
 - `books` (relation to books, multiple)
 
 **epubcfi collection:**
+
 - `firebaseId` (text field)
 - `userId` (text field)
 - `book` (relation to books, single)

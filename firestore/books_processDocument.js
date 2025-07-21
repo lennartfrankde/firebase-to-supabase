@@ -99,6 +99,8 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
           userData: userId, // Reference to user
           bookId: doc.firestore_id,
           verlagId: doc.verlagId || "",
+          firebaseBookId: doc.firestore_id, // Keep original Firebase book ID
+          firebaseUserId: userId, // Keep original Firebase user ID
           userId: userId,
           created: safeConvertToDate(requestData.time) || new Date(),
           updated: safeConvertToDate(requestData.time) || new Date(),
@@ -114,7 +116,6 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
   // Clean up fields that are now handled as relations or separate records
   delete doc.id;
   delete doc.Id; // Remove Firebase document ID
-  delete doc.Schlagworte; // Now handled as separate records
   delete doc.Links; // Now handled as separate records
 
   // Map Firebase fields to PocketBase schema
@@ -163,6 +164,10 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
     LeseexemplarFileName: "", // Will need to be extracted from LeseexemplarLink if needed
     benachrichtigungLeseexemplar: doc.benachrichtigungLeseexemplar || [], // Array of user IDs who want leseexemplar notifications
     benachrichtigungLeseprobe: doc.benachrichtigungLeseprobe || [], // Array of user IDs who want leseprobe notifications
+    firebaseSchlagworte: doc.Schlagworte || [], // Keep original Schlagworte array for reference
+    firebaseBenachrichtigungLeseprobe: doc.benachrichtigungLeseprobe || [],
+    firebaseBenachrichtigungLeseexemplar:
+      doc.benachrichtigungLeseexemplar || [],
     created: safeConvertToDate(doc.created) || new Date(),
     updated: safeConvertToDate(doc.updated) || new Date(),
   };
@@ -171,6 +176,7 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
   delete doc.created;
   delete doc.updated;
   delete doc.firestore_id;
+  delete doc.Schlagworte; // Now handled as separate records
 
   return bookRecord;
 };

@@ -1,0 +1,17 @@
+[
+  {
+    "origin": [
+      "https://buchnovi.de",
+      "2a01:41e3:2305:7f00:45eb:a9d3:c4d:9884"
+    ],
+    "method": [
+      "GET",
+      "HEAD",
+      "POST"
+    ],
+    "maxAgeSeconds": 3600,
+    "responseHeader": [
+      "Content-Type"
+    ]
+  }
+]
